@@ -201,7 +201,7 @@ async def run_server(args, **uvicorn_kwargs) -> None:
     logger.info("args: %s", args)
 
     temp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # nosemgrep
-    temp_socket.bind(("", args.port))
+    temp_socket.bind((args.host, args.port))
 
     def signal_handler(*_) -> None:
         # Interrupt server on sigterm while initializing
