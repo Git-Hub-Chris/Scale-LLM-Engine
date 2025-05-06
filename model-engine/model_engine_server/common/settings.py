@@ -61,7 +61,7 @@ def generate_destination(user_id: str, endpoint_name: str, endpoint_type: str) -
 
 
 def _generate_deployment_name_parts(user_id: str, endpoint_name: str) -> List[str]:
-    user_endpoint_hash = hashlib.md5((user_id + endpoint_name).encode("utf-8")).hexdigest()
+    user_endpoint_hash = hashlib.sha256((user_id + endpoint_name).encode("utf-8")).hexdigest()
     return [
         DEPLOYMENT_PREFIX,
         user_id[:24],
