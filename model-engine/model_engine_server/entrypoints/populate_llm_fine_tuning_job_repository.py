@@ -12,6 +12,7 @@ You will need a docker image from the fine-tuning repo. Refer to llm/finetune_pi
 """
 
 import argparse
+from urllib.parse import urlparse
 import asyncio
 
 import requests
@@ -146,7 +147,9 @@ async def main(args):
 
     if repository.startswith("s3://"):
         repo = S3FileLLMFineTuneRepository(file_path=repository)
-    elif repository.startswith("azure://") or "blob.core.windows.net" in repository:
+    elif repository.startswith("azure://") or (
+        urlparse(repository).hostname and urlparse(repository).hostname.endswith("blob.core.windows.net")
+    ):
         repo = ABSFileLLMFineTuneRepository(file_path=repository)
     else:
         raise ValueError(f"LLM fine-tune repository must be S3 or ABS file; got {repository}")
