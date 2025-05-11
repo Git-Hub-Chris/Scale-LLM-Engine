@@ -85,7 +85,7 @@ def get_engine_url(
             host = creds.get("clusterHostRo") if read_only else creds.get("clusterHost")
             port = str(creds.get("port"))
             dbname = creds.get("dbname")
-            logger.info(f"Connecting to db {host}:{port}, name {dbname}")
+            logger.info("Establishing a connection to the database.")
 
             engine_url = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
 
