@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import Callable, Optional
 
 import aioredis
+from urllib.parse import urlparse
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials, OAuth2PasswordBearer
 from model_engine_server.common.config import hmi_config
@@ -343,7 +344,7 @@ def _get_external_interfaces(
     docker_repository: DockerRepository
     if CIRCLECI:
         docker_repository = FakeDockerRepository()
-    elif infra_config().docker_repo_prefix.endswith("azurecr.io"):
+    elif urlparse(infra_config().docker_repo_prefix).hostname == "azurecr.io":
         docker_repository = ACRDockerRepository()
     else:
         docker_repository = ECRDockerRepository()
