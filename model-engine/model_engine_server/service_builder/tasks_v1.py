@@ -1,6 +1,7 @@
 import asyncio
 import os
 from typing import Any, Dict
+from urllib.parse import urlparse
 
 import aioredis
 from celery.signals import worker_process_init
@@ -74,7 +75,7 @@ def get_live_endpoint_builder_service(
     docker_repository: DockerRepository
     if CIRCLECI:
         docker_repository = FakeDockerRepository()
-    elif infra_config().docker_repo_prefix.endswith("azurecr.io"):
+    elif urlparse(infra_config().docker_repo_prefix).hostname.endswith(".azurecr.io"):
         docker_repository = ACRDockerRepository()
     else:
         docker_repository = ECRDockerRepository()
