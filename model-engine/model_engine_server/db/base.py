@@ -57,7 +57,7 @@ def get_engine_url(
             env = infra_config().env
         if key_file is None:
             key_file = get_key_file_name(env)  # type: ignore
-        logger.debug(f"Using key file {key_file}")
+        logger.debug("Using a key file for database connection.")
 
         if infra_config().cloud_provider == "azure":
             client = SecretClient(
