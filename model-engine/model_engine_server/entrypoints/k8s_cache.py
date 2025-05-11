@@ -6,6 +6,7 @@ import argparse
 import asyncio
 import os
 import time
+from urllib.parse import urlparse
 from typing import Any
 
 from kubernetes import config as kube_config
@@ -124,7 +125,7 @@ async def main(args: Any):
     docker_repo: DockerRepository
     if CIRCLECI:
         docker_repo = FakeDockerRepository()
-    elif infra_config().docker_repo_prefix.endswith("azurecr.io"):
+    elif urlparse(infra_config().docker_repo_prefix).hostname == "azurecr.io":
         docker_repo = ACRDockerRepository()
     else:
         docker_repo = ECRDockerRepository()
