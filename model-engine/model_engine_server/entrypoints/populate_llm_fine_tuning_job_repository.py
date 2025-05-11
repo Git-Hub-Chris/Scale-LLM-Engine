@@ -15,6 +15,9 @@ import argparse
 from urllib.parse import urlparse
 import asyncio
 
+def is_valid_blob_hostname(hostname):
+    # Check if the hostname is exactly "blob.core.windows.net" or a subdomain of it
+    return hostname == "blob.core.windows.net" or hostname.endswith(".blob.core.windows.net")
 import requests
 from model_engine_server.common.config import hmi_config
 from model_engine_server.domain.entities.llm_fine_tune_entity import LLMFineTuneTemplate
@@ -148,7 +151,7 @@ async def main(args):
     if repository.startswith("s3://"):
         repo = S3FileLLMFineTuneRepository(file_path=repository)
     elif repository.startswith("azure://") or (
-        urlparse(repository).hostname and urlparse(repository).hostname.endswith("blob.core.windows.net")
+        urlparse(repository).hostname and is_valid_blob_hostname(urlparse(repository).hostname)
     ):
         repo = ABSFileLLMFineTuneRepository(file_path=repository)
     else:
