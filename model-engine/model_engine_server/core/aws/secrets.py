@@ -26,5 +26,5 @@ def get_key_file(secret_name: str, aws_profile: Optional[str] = None):
         return secret_value
     except ClientError as e:
         logger.error(e)
-        logger.error(f"Failed to retrieve secret: {secret_name}")
+        logger.error("Failed to retrieve a secret from AWS Secrets Manager.")
         return {}
