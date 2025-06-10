@@ -8,7 +8,7 @@ aiofiles==23.1.0
     # via quart
 aiohappyeyeballs==2.6.1
     # via aiohttp
-aiohttp==3.12.9
+aiohttp==3.12.11
     # via
     #   -r requirements.in
     #   kubernetes-asyncio
